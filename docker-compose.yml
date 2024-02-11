@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  postgres-api:
+    image: postgres:14.3
+    container_name: solana-arbitrage-database
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: 'solana_arbitrage_dev'
+      POSTGRES_USER: 'solana_arbitrage'
+      POSTGRES_PASSWORD: 'solana_arbitrage'
+      ADDITIONAL_POSTGRES_DBS: 'solana_arbitrage_test'
+    volumes:
+      - ./.docker-data/.pg-data:/var/lib/postgresql/data
+  rabbitmq:
+    image: rabbitmq:3.10.5-management
+    container_name: solana-arbitrage-message-queue
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - ./.docker-data/.rabbit-data:/var/lib/rabbitmq/
+      - ./.docker-data/.rabbit-log:/var/log/rabbitmq

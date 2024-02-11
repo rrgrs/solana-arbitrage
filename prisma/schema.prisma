@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SolanaExchangePrice {
+  id                   Int                           @id @default(autoincrement())
+  exchangeName         String                        @unique
+  price                Decimal                       @db.Decimal(10, 2)
+  lowestPriceRelation  SolanaMaximumPriceDifference? @relation("lowestPriceRelation")
+  highestPriceRelation SolanaMaximumPriceDifference? @relation("highestPriceRelation")
+  createdAt            DateTime                      @default(now())
+  updatedAt            DateTime                      @updatedAt
+}
+
+model SolanaMaximumPriceDifference {
+  id                          Int                 @id @default(autoincrement())
+  highestExchangePrice        SolanaExchangePrice @relation("highestPriceRelation", fields: [highestExchangePriceId], references: [id])
+  highestExchangePriceId      Int                 @unique
+  currentHighestExchangePrice Decimal             @db.Decimal(10, 2)
+  lowestExchangePrice         SolanaExchangePrice @relation("lowestPriceRelation", fields: [lowestExchangePriceId], references: [id])
+  lowestExchangePriceId       Int                 @unique
+  currentLowestExchangePrice  Decimal             @db.Decimal(10, 2)
+  createdAt                   DateTime            @default(now())
+  updatedAt                   DateTime            @updatedAt
+}
+
+model EmailSubscription {
+  id                            Int      @id @default(autoincrement())
+  emailAddress                  String   @unique
+  minimumPriceDifferencePercent Float
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime @updatedAt
+}

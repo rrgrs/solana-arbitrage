@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <script src="js/htmx.min.js"></script>
+    <script src="js/client-side-templates.min.js"></script>
+    <script src="js/mustache.min.js"></script>
+    <script src="js/mustache-wax.min.js"></script>
+    <script type="text/javascript">
+        Mustache.Formatters = {
+            "percent_diff": function (base_val, comparison_val) {
+                console.log(comparison_val - base_val)
+                console.log(Math.abs(comparison_val - base_val))
+                console.log(Math.abs(comparison_val - base_val) / base_val)
+                return (Math.abs(comparison_val - base_val) / base_val * 100).toFixed(2);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div hx-ext="client-side-templates">
+        <div class="mask d-flex align-items-center h-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <h2 hx-get="/maximum-price-difference" hx-swap="innerHTML" hx-trigger="load, every 10s"
+                            mustache-template="summary" style="height: 115px;">
+                        </h2>
+                        <div class="table-responsive bg-white">
+                            <table class="table mb-0" style="height: 500px;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Exchange Name</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody hx-get="/exchange-prices" hx-swap="innerHTML" mustache-array-template="prices"
+                                    hx-trigger="load, every 10s">
+                                </tbody>
+                            </table>
+                        </div>
+                        <form hx-post="/email-subscriptions">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="emailAddress">Email</label>
+                                    <input type="email" class="form-control" name="emailAddress" id="emailAddress">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="minimumPriceDifferencePercent">Minimum Arbitrage Percent Trigger</label>
+                                    <input type="number" class="form-control" step="0.1" value="1.0"
+                                        name="minimumPriceDifferencePercent" id="minimumPriceDifferencePercent">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        <form hx-delete="/email-subscriptions">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="emailAddress">Unsubscribe Email</label>
+                                    <input type="email" class="form-control" name="emailAddress" id="emailAddress">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <button type="submit" class="btn btn-primary">Unsubscribe</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <template id="prices">
+            {{#data}}
+            <tr>
+                <td>{{ exchangeName }}</td>
+                <td>${{ price }}</td>
+            </tr>
+            {{/data}}
+        </template>
+        <template id="summary">
+            Lowest Price: <strong>{{ lowestExchangePrice.exchangeName }}</strong> Exchange: <strong>${{
+                lowestExchangePrice.price }}</strong><br />
+            Highest Price: <strong>{{ highestExchangePrice.exchangeName }}</strong> Exchange: <strong>${{
+                highestExchangePrice.price }}</strong><br />
+            Percent Increase: <strong>{{ lowestExchangePrice.price|percent_diff:highestExchangePrice.price }}%</strong>
+        </template>
+    </div>
+
+</body>
+
+</html>

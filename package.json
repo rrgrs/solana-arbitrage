@@ -1,0 +1,47 @@
+{
+  "name": "solana-arbitrage",
+  "scripts": {
+    "dev": "concurrently --kill-others \"npm run dev:webserver\" \"npm run dev:emailer\" \"npm run dev:price_checker\" \"npm run dev:maximum_price_difference_calculator\"",
+    "dev:webserver": "ts-node-dev --no-notify --respawn --transpile-only src/applications/webserver/index.ts",
+    "dev:emailer": "ts-node-dev --no-notify --respawn --transpile-only src/applications/emailer/index.ts",
+    "dev:price_checker": "ts-node-dev --no-notify --respawn --transpile-only src/applications/price_checker/index.ts",
+    "dev:maximum_price_difference_calculator": "ts-node-dev --no-notify --respawn --transpile-only src/applications/maximum_price_difference_calculator/index.ts",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "jest unit",
+    "test:all": "jest",
+    "test:integration": "jest integration",
+    "test:unit": "jest unit"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.4",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.16",
+    "@types/nodemailer": "^6.4.14",
+    "@types/supertest": "^6.0.2",
+    "axios-mock-adapter": "^1.22.0",
+    "concurrently": "^8.2.2",
+    "jest-mock-extended": "^3.0.5",
+    "prisma": "^5.9.1",
+    "supertest": "^6.3.4",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.9.1",
+    "amqplib": "^0.10.3",
+    "axios": "^1.6.7",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "express-prom-bundle": "^7.0.0",
+    "express-validator": "^7.0.1",
+    "nodemailer": "^6.9.9",
+    "prom-client": "^15.1.0"
+  }
+}
