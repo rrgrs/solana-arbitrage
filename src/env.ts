@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const webserverPort = process.env.WEBSERVER_PORT || 3000;
+export const webserverPort = parseInt(process.env.PORT) || 3000;
 
 export const messageQueueUrl = process.env.MESSAGE_QUEUE_URL || "amqp://localhost:5672";
 export const priceCheckerQueueName = process.env.PRICE_CHECKER_QUEUE_NAME || "priceChecker";

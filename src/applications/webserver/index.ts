@@ -4,7 +4,6 @@ import { emailRouter } from "../../components/email_subscription/routes";
 import { exchangePriceRouter } from "../../components/exchange_price/routes";
 import { maximumPriceDifferenceRouter } from "../../components/maximum_price_difference/routes";
 import { webserverPort } from "../../env";
-import bodyParser from "body-parser";
 
 
 export const webserverApp: Express = express();
@@ -23,7 +22,7 @@ webserverApp.get('/health', (req: Request, res: Response) => {
 
 
 if (require.main === module) {
-    webserverApp.listen(webserverPort, () => {
-        console.log(`[server]: Server is running at http://localhost:${webserverPort}`);
+    webserverApp.listen(webserverPort, '0.0.0.0', () => {
+        console.log(`[server]: Server is running at http://0.0.0.0:${webserverPort}`);
     });
 }
