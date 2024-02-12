@@ -2,7 +2,7 @@
 
 The intent of this application is to detect arbitrage opportunities for the crypto coin called Solana. An arbitrage is when there's a price discrepency between two crypto marketplaces. The difference in price allows a user to buy coins on one exchange then sell on the other for a profit. Solana was chosen because it is fast and transfers are cheap, so in theory one can quickly react to the arbitrage opportunity before it disappears.
 
-This application has 3 background tasks and one webserver. The background tasks pull in updated prices, calculate the price maximum price difference, and sends emails respectively. There is a web frontend that allows users to view the current prices, the current maximim price difference, and a form for users to input their email address to receive alerts when an arbitrage opporunity is detected.
+This application has three background tasks and one webserver. The background tasks pull in updated prices, calculate the price maximum price difference, and sends emails respectively. There is a web frontend that allows users to view the current prices, the current maximim price difference, and a form for users to input their email address to receive alerts when an arbitrage opportunity is detected.
 
 ### Requirements
 1. node js (developed using version 18.4.0)

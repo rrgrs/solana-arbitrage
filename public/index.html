@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HTML 5 Boilerplate</title>
+    <title>Solana Arbitrage</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <script src="js/htmx.min.js"></script>
@@ -15,9 +15,6 @@
     <script type="text/javascript">
         Mustache.Formatters = {
             "percent_diff": function (base_val, comparison_val) {
-                console.log(comparison_val - base_val)
-                console.log(Math.abs(comparison_val - base_val))
-                console.log(Math.abs(comparison_val - base_val) / base_val)
                 return (Math.abs(comparison_val - base_val) / base_val * 100).toFixed(2);
             }
         }
@@ -93,10 +90,10 @@
             {{/data}}
         </template>
         <template id="summary">
-            Lowest Price: <strong>{{ lowestExchangePrice.exchangeName }}</strong> Exchange: <strong>${{
-                lowestExchangePrice.price }}</strong><br />
-            Highest Price: <strong>{{ highestExchangePrice.exchangeName }}</strong> Exchange: <strong>${{
-                highestExchangePrice.price }}</strong><br />
+            Lowest Price: <strong>{{ lowestExchangePrice.price }}</strong> Exchange: <strong>${{
+                lowestExchangePrice.exchangeName }}</strong><br />
+            Highest Price: <strong>{{ highestExchangePrice.price }}</strong> Exchange: <strong>${{
+                highestExchangePrice.exchangeName }}</strong><br />
             Percent Increase: <strong>{{ lowestExchangePrice.price|percent_diff:highestExchangePrice.price }}%</strong>
         </template>
     </div>
