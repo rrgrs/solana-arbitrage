@@ -90,9 +90,9 @@
             {{/data}}
         </template>
         <template id="summary">
-            Lowest Price: <strong>{{ lowestExchangePrice.price }}</strong> Exchange: <strong>${{
+            Lowest Price: <strong>${{ lowestExchangePrice.price }}</strong> Exchange: <strong>{{
                 lowestExchangePrice.exchangeName }}</strong><br />
-            Highest Price: <strong>{{ highestExchangePrice.price }}</strong> Exchange: <strong>${{
+            Highest Price: <strong>${{ highestExchangePrice.price }}</strong> Exchange: <strong>{{
                 highestExchangePrice.exchangeName }}</strong><br />
             Percent Increase: <strong>{{ lowestExchangePrice.price|percent_diff:highestExchangePrice.price }}%</strong>
         </template>
